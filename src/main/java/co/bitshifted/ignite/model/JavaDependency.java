@@ -1,3 +1,13 @@
+/*
+ *
+ *  * Copyright (c) 2022  Bitshift D.O.O (http://bitshifted.co)
+ *  *
+ *  * This Source Code Form is subject to the terms of the Mozilla Public
+ *  * License, v. 2.0. If a copy of the MPL was not distributed with this
+ *  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ */
+
 package co.bitshifted.ignite.model;
 
 import co.bitshifted.ignite.util.ModuleChecker;
@@ -6,11 +16,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.maven.artifact.Artifact;
-import org.apache.maven.model.Dependency;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.jar.JarFile;
 
 @Data
 @NoArgsConstructor
@@ -25,17 +32,10 @@ public class JavaDependency {
     private String sha256;
     private long size;
     private boolean modular;
+    private String mimeType;
 
     @JsonIgnore
     private File dependencyFile;
-
-    public JavaDependency(Dependency mvnDependency) {
-        this.groupId = mvnDependency.getGroupId();
-        this.artifactId = mvnDependency.getArtifactId();
-        this.version = mvnDependency.getVersion();
-        this.type = mvnDependency.getType();
-        this.classifier = mvnDependency.getClassifier();
-    }
 
     public JavaDependency(Artifact artifact) {
         this.groupId = artifact.getGroupId();

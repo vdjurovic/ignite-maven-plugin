@@ -1,16 +1,21 @@
+/*
+ *
+ *  * Copyright (c) 2022  Bitshift D.O.O (http://bitshifted.co)
+ *  *
+ *  * This Source Code Form is subject to the terms of the Mozilla Public
+ *  * License, v. 2.0. If a copy of the MPL was not distributed with this
+ *  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ */
+
 package co.bitshifted.ignite.resource;
 
-import co.bitshifted.ignite.IgniteConstants;
 import co.bitshifted.ignite.model.BasicResource;
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.codec.digest.MessageDigestAlgorithms;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,6 +47,8 @@ public class ResourceProducer {
         out.setSha256(DIGEST_UTILS.digestAsHex(path.toFile()));
         out.setSize(path.toFile().length());
         out.setTarget(input.getTarget() != null ? input.getTarget() : input.getSource());
+        out.setSource(input.getSource());
+        out.setMimeType(input.getMimeType());
         return out;
     }
 
