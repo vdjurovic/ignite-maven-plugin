@@ -1,6 +1,6 @@
 /*
  *
- *  * Copyright (c) 2022  Bitshift D.O.O (http://bitshifted.co)
+ *  * Copyright (c) 2022-2022  Bitshift D.O.O (http://bitshifted.co)
  *  *
  *  * This Source Code Form is subject to the terms of the Mozilla Public
  *  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -8,12 +8,12 @@
  *
  */
 
-package co.bitshifted.ignite.deploy;
+package co.bitshifted.appforge.ignite.deploy;
 
-import co.bitshifted.ignite.IgniteConstants;
-import co.bitshifted.ignite.common.dto.DeploymentDTO;
-import co.bitshifted.ignite.common.dto.RequiredResourcesDTO;
-import co.bitshifted.ignite.model.JavaDependency;
+import co.bitshifted.appforge.ignite.IgniteConstants;
+import co.bitshifted.appforge.common.dto.DeploymentDTO;
+import co.bitshifted.appforge.common.dto.RequiredResourcesDTO;
+import co.bitshifted.appforge.ignite.model.JavaDependency;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.FileOutputStream;

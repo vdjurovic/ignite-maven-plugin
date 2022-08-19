@@ -1,6 +1,6 @@
 /*
  *
- *  * Copyright (c) 2022  Bitshift D.O.O (http://bitshifted.co)
+ *  * Copyright (c) 2022-2022  Bitshift D.O.O (http://bitshifted.co)
  *  *
  *  * This Source Code Form is subject to the terms of the Mozilla Public
  *  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -8,23 +8,23 @@
  *
  */
 
-package co.bitshifted.ignite;
+package co.bitshifted.appforge.ignite;
 
-import co.bitshifted.ignite.common.dto.DeploymentDTO;
-import co.bitshifted.ignite.common.dto.DeploymentStatusDTO;
-import co.bitshifted.ignite.common.dto.JvmConfigurationDTO;
-import co.bitshifted.ignite.common.dto.RequiredResourcesDTO;
-import co.bitshifted.ignite.common.model.BasicResource;
-import co.bitshifted.ignite.deploy.DependencyProcessor;
-import co.bitshifted.ignite.deploy.DependencyResolutionResult;
-import co.bitshifted.ignite.deploy.Packer;
-import co.bitshifted.ignite.exception.CommunicationException;
-import co.bitshifted.ignite.http.IgniteHttpClient;
-import co.bitshifted.ignite.http.SubmitDeploymentResponse;
-import co.bitshifted.ignite.model.IgniteConfig;
-import co.bitshifted.ignite.model.JavaDependency;
-import co.bitshifted.ignite.resource.ResourceProducer;
-import co.bitshifted.ignite.util.ModuleChecker;
+import co.bitshifted.appforge.common.dto.DeploymentDTO;
+import co.bitshifted.appforge.common.dto.DeploymentStatusDTO;
+import co.bitshifted.appforge.common.dto.JvmConfigurationDTO;
+import co.bitshifted.appforge.common.dto.RequiredResourcesDTO;
+import co.bitshifted.appforge.common.model.BasicResource;
+import co.bitshifted.appforge.ignite.deploy.DependencyProcessor;
+import co.bitshifted.appforge.ignite.deploy.DependencyResolutionResult;
+import co.bitshifted.appforge.ignite.deploy.Packer;
+import co.bitshifted.appforge.ignite.exception.CommunicationException;
+import co.bitshifted.appforge.ignite.model.IgniteConfig;
+import co.bitshifted.appforge.ignite.model.JavaDependency;
+import co.bitshifted.appforge.ignite.resource.ResourceProducer;
+import co.bitshifted.appforge.ignite.http.IgniteHttpClient;
+import co.bitshifted.appforge.ignite.http.SubmitDeploymentResponse;
+import co.bitshifted.appforge.ignite.util.ModuleChecker;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -48,7 +48,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static co.bitshifted.ignite.IgniteConstants.*;
+import static co.bitshifted.appforge.ignite.IgniteConstants.*;
 
 /**
  * Goal which deploys application to configured server.

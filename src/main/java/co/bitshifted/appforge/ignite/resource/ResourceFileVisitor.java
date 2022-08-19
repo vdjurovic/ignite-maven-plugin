@@ -1,6 +1,6 @@
 /*
  *
- *  * Copyright (c) 2022  Bitshift D.O.O (http://bitshifted.co)
+ *  * Copyright (c) 2022-2022  Bitshift D.O.O (http://bitshifted.co)
  *  *
  *  * This Source Code Form is subject to the terms of the Mozilla Public
  *  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -8,10 +8,10 @@
  *
  */
 
-package co.bitshifted.ignite.resource;
+package co.bitshifted.appforge.ignite.resource;
 
 
-import co.bitshifted.ignite.common.model.BasicResource;
+import co.bitshifted.appforge.common.model.BasicResource;
 
 import java.io.IOException;
 import java.nio.file.FileVisitResult;

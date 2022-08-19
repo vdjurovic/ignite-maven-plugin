@@ -11,19 +11,25 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>co.bitshifted.appforge</groupId>
+        <artifactId>appforge</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
     <groupId>co.bitshifted</groupId>
     <artifactId>ignite-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
     <version>1.0.0-SNAPSHOT</version>
-    <name>ignite-maven-plugin Maven Mojo</name>
-    <url>http://maven.apache.org</url>
+
+    <name>Ignite Maven plugin</name>
+    <url>https://github.com/bitshifted/ignite-maven-plugin</url>
 
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
-        <jackson.version>2.13.3</jackson.version>
         <okhttp.version>4.9.0</okhttp.version>
-        <ignite-common.version>0.1.0-SNAPSHOT</ignite-common.version>
+        <appforge-common.version>0.1.0-SNAPSHOT</appforge-common.version>
     </properties>
 
     <dependencies>
@@ -59,27 +65,22 @@
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
-            <version>2.8.0</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
         </dependency>
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.15</version>
         </dependency>
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
@@ -87,21 +88,19 @@
             <version>${okhttp.version}</version>
         </dependency>
         <dependency>
-            <groupId>co.bitshifted</groupId>
-            <artifactId>ignite-common</artifactId>
-            <version>${ignite-common.version}</version>
+            <groupId>co.bitshifted.appforge</groupId>
+            <artifactId>appforge-common</artifactId>
+            <version>${appforge-common.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.8.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>4.6.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -112,6 +111,10 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
                 <version>3.6.4</version>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
