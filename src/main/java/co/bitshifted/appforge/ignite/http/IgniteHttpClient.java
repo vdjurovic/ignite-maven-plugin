@@ -1,6 +1,6 @@
 /*
  *
- *  * Copyright (c) 2022  Bitshift D.O.O (http://bitshifted.co)
+ *  * Copyright (c) 2022-2022  Bitshift D.O.O (http://bitshifted.co)
  *  *
  *  * This Source Code Form is subject to the terms of the Mozilla Public
  *  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -8,12 +8,13 @@
  *
  */
 
-package co.bitshifted.ignite.http;
+package co.bitshifted.appforge.ignite.http;
 
-import co.bitshifted.ignite.common.dto.DeploymentDTO;
-import co.bitshifted.ignite.common.dto.DeploymentStatusDTO;
-import co.bitshifted.ignite.common.model.DeploymentStatus;
-import co.bitshifted.ignite.exception.CommunicationException;
+import co.bitshifted.appforge.common.dto.DeploymentDTO;
+import co.bitshifted.appforge.common.dto.DeploymentStatusDTO;
+import co.bitshifted.appforge.common.model.DeploymentStatus;
+import co.bitshifted.appforge.ignite.IgniteConstants;
+import co.bitshifted.appforge.ignite.exception.CommunicationException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.*;
 import org.apache.maven.plugin.logging.Log;
@@ -23,9 +24,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
-
-import static co.bitshifted.ignite.IgniteConstants.JSON_MIME_TYPE;
-import static co.bitshifted.ignite.IgniteConstants.ZIP_MIME_TYPE;
 
 public final class IgniteHttpClient {
 
@@ -56,7 +54,7 @@ public final class IgniteHttpClient {
     public String submitDeployment(DeploymentDTO deploymentDTO) throws CommunicationException {
         try {
             String text = objectMapper.writeValueAsString(deploymentDTO);
-            RequestBody body = RequestBody.create(text, MediaType.parse(JSON_MIME_TYPE));
+            RequestBody body = RequestBody.create(text, MediaType.parse(IgniteConstants.JSON_MIME_TYPE));
             Request request = new Request.Builder().url(serverBaseUrl + DEPLOYMENT_SUBMIT_ENDPOINT).post(body).build();
 
             Call call = client.newCall(request);
@@ -113,7 +111,7 @@ public final class IgniteHttpClient {
             ByteArrayOutputStream bout = new ByteArrayOutputStream();
             Files.copy(archive, bout);
             bout.close();
-            RequestBody body = RequestBody.create(bout.toByteArray(), MediaType.parse(ZIP_MIME_TYPE));
+            RequestBody body = RequestBody.create(bout.toByteArray(), MediaType.parse(IgniteConstants.ZIP_MIME_TYPE));
             Request request = new Request.Builder().put(body).url(url).build();
             Call call = client.newCall(request);
             Response response = call.execute();

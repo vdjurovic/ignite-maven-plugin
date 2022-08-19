@@ -1,6 +1,6 @@
 /*
  *
- *  * Copyright (c) 2022  Bitshift D.O.O (http://bitshifted.co)
+ *  * Copyright (c) 2022-2022  Bitshift D.O.O (http://bitshifted.co)
  *  *
  *  * This Source Code Form is subject to the terms of the Mozilla Public
  *  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -8,11 +8,11 @@
  *
  */
 
-package co.bitshifted.ignite.model;
+package co.bitshifted.appforge.ignite.model;
 
-import co.bitshifted.ignite.common.dto.JvmConfigurationDTO;
-import co.bitshifted.ignite.common.model.JavaVersion;
-import co.bitshifted.ignite.common.model.JvmVendor;
+import co.bitshifted.appforge.common.dto.JvmConfigurationDTO;
+import co.bitshifted.appforge.common.model.JavaVersion;
+import co.bitshifted.appforge.common.model.JvmVendor;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

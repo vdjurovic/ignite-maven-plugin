@@ -1,5 +1,5 @@
 ---
-id: 1234adf
+application-id: 1234adf
 server-url: "http://localhost:8080"
 application-info:
   splash-screen:
