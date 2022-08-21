@@ -50,6 +50,7 @@ public class ResourceProducer {
         out.setTarget(input.getTarget() != null ? input.getTarget() : input.getSource());
         out.setSource(input.getSource());
         out.setMimeType(input.getMimeType());
+        out.setExecutable(Files.isExecutable(path));
         return out;
     }
 
