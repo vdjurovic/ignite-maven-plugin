@@ -29,6 +29,7 @@ application-info:
 jvm:
   vendor: ADOPTIUM
   major-version: "17"
+  release: "latest"
   jvm-options: "-Xms10m -Xmx120m"
   system-properties: "-Dprop1=value1 -Dprop2=value2"
   main-class: com.test.TestFX.TestFX
