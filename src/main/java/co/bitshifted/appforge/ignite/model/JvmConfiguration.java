@@ -24,9 +24,7 @@ public class JvmConfiguration {
     private JvmVendor vendor;
     @JsonProperty("major-version")
     private JavaVersion majorVersion;
-    @JsonProperty("fixed-version")
-    private String fixedVersion;
-
+    private String release;
     @JsonProperty("jvm-options")
     private String jvmOptions;
     @JsonProperty("system-properties")
@@ -42,7 +40,7 @@ public class JvmConfiguration {
         JvmConfigurationDTO dto = new JvmConfigurationDTO();
         dto.setVendor(vendor);
         dto.setMajorVersion(majorVersion);
-        dto.setFixedVersion(fixedVersion);
+        dto.setRelease(release);
         dto.setJvmOptions(jvmOptions);
         dto.setSystemProperties(systemProperties);
         dto.setMainClass(mainClass);
