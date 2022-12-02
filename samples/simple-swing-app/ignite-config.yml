@@ -11,13 +11,19 @@ application-info:
   windows:
     icons:
       - source: "icon_win.ico"
+    supported-cpu-arch:
+      - "X64"
   linux:
     icons:
       - source: "icon_x48.png"
       - source: "icon_x64.png"
+    supported-cpu-arch:
+      - "X64"
   mac:
     icons:
       - source: "icon_osx.icns"
+    supported-cpu-arch:
+      - "X64"
 jvm:
   vendor: ADOPTIUM
   major-version: "8"
