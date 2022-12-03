@@ -23,6 +23,13 @@ application-info:
     icons:
       - source: "icon_x48.png"
       - source: "icon_x64.png"
+    supported-cpu-arch:
+      - "X64"
+      - "AARCH64"
+    packageTypes:
+      - "TAR_GZ"
+      - "RPM"
+      - "DEB"
   mac:
     icons:
       - source: "icon_osx.icns"
