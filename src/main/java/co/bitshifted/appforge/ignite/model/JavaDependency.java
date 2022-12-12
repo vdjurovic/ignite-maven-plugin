@@ -11,6 +11,8 @@
 package co.bitshifted.appforge.ignite.model;
 
 import co.bitshifted.appforge.common.dto.JavaDependencyDTO;
+import co.bitshifted.appforge.common.model.CpuArch;
+import co.bitshifted.appforge.common.model.OperatingSystem;
 import co.bitshifted.appforge.ignite.util.ModuleChecker;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -41,6 +43,9 @@ public class JavaDependency {
     private long size;
     private boolean modular;
     private String mimeType;
+    private boolean platformSpecific = false;
+    private OperatingSystem supportedOs;
+    private CpuArch supportedCpuArch;
 
     @JsonIgnore
     private File dependencyFile;
@@ -73,6 +78,13 @@ public class JavaDependency {
         this.modular = ModuleChecker.checkForModuleInfo(file);
     }
 
+    public JavaDependency(Artifact artifact, File file, OperatingSystem os, CpuArch cpuArch) {
+        this(artifact, file);
+        this.platformSpecific = true;
+        this.supportedOs = os;
+        this.supportedCpuArch = cpuArch;
+    }
+
     public JavaDependencyDTO toDto() {
         JavaDependencyDTO dto = new JavaDependencyDTO();
         dto.setGroupId(groupId);
@@ -83,6 +95,9 @@ public class JavaDependency {
         dto.setSha256(sha256);
         dto.setSize(size);
         dto.setModular(modular);
+        dto.setPlatformSpecific(platformSpecific);
+        dto.setSupportedOs(supportedOs);
+        dto.setSupportedCpuArch(supportedCpuArch);
         return dto;
     }
 }
