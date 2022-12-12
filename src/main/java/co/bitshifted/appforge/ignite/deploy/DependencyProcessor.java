@@ -10,6 +10,7 @@
 
 package co.bitshifted.appforge.ignite.deploy;
 
+import co.bitshifted.appforge.common.model.CpuArch;
 import co.bitshifted.appforge.common.model.OperatingSystem;
 import co.bitshifted.appforge.ignite.model.JavaDependency;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -27,13 +28,14 @@ import org.twdata.maven.mojoexecutor.MojoExecutor;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DependencyProcessor {
 
-    private static final String[] JAVAFX_PLATFORM_VALUES = new String[]{"linux", "mac", "win"};
+    private static final String[] JAVAFX_PLATFORM_VALUES = new String[]{"linux", "linux-aarch64", "mac", "mac-aarch64", "win"};
     private static final String JAVAFX_GROUP = "org.openjfx";
 
     private final MavenProject project;
@@ -50,18 +52,26 @@ public class DependencyProcessor {
         this.digestUtils = new DigestUtils(MessageDigestAlgorithms.SHA_256);
     }
 
-    public DependencyResolutionResult resolveDependencies(Set<OperatingSystem> supported) throws IOException {
+    public DependencyResolutionResult resolveDependencies(Set<OperatingSystem> supportedOs) throws IOException {
         DependencyResolutionResult result = new DependencyResolutionResult();
         Set<JavaDependency> allDeps = calculateDependenciesInt();
-        Set<JavaDependency> javafxDeps = javafxDependencies(allDeps);
-        if(!javafxDeps.isEmpty()) {
-            allDeps.removeAll(javafxDeps);
-            downloadJavafxDependencies(javafxDeps);
-            for(OperatingSystem os : supported) {
-                result.setDependencies(os, resolveJavafxDependencies(javafxDeps, os));
+        Set<JavaDependency> javafxPlatformDeps = allDeps.stream()
+            .filter(i -> JAVAFX_GROUP.equals(i.getGroupId()) && i.getClassifier() != null)
+            .collect(Collectors.toSet());
+        Set<JavaDependency> commonDeps = allDeps.stream().filter(i -> !JAVAFX_GROUP.equals(i.getGroupId()))
+            .collect(Collectors.toSet());
+
+        if(!javafxPlatformDeps.isEmpty()) {
+            downloadJavafxDependencies(javafxPlatformDeps);
+            for(OperatingSystem os : supportedOs) {
+                Set<JavaDependency> osDeps = new HashSet<>();
+                for(CpuArch arch : CpuArch.values()) {
+                   osDeps.addAll(resolveJavafxDependencies(javafxPlatformDeps, os, arch));
+                }
+                result.setDependencies(os, osDeps);
             }
         }
-        result.setCommon(cleanup(result, allDeps));
+        result.setCommon(commonDeps);
 
        return result;
     }
@@ -110,18 +120,24 @@ public class DependencyProcessor {
 
     }
 
-    private Set<JavaDependency> resolveJavafxDependencies(Set<JavaDependency> input, OperatingSystem os) throws IOException {
+    private Set<JavaDependency> resolveJavafxDependencies(Set<JavaDependency> input, OperatingSystem os, CpuArch arch) throws IOException {
+        if(os == OperatingSystem.WINDOWS && arch == CpuArch.AARCH64) {
+            return Collections.emptySet();
+        }
         Set<JavaDependency> out = new HashSet<>();
-        String classifier = javafxOperatingSystemClassifier(os);
+        String classifier = javafxOperatingSystemClassifier(os, arch);
         for(JavaDependency d : input) {
             if(classifier.equals(d.getClassifier())) {
+                d.setPlatformSpecific(true);
+                d.setSupportedOs(os);
+                d.setSupportedCpuArch(arch);
                 out.add(d);
             } else {
                 Artifact artifact = new DefaultArtifact(d.getGroupId(), d.getArtifactId(), d.getVersion(), null, d.getType(), classifier, d.getArtifact().getArtifactHandler());
                 String path = session.getLocalRepository().pathOf(artifact);
                 Path repoDirPath = Paths.get(session.getLocalRepository().getBasedir());
                 Path artifactPath = repoDirPath.resolve(path);
-                JavaDependency dep = new JavaDependency(artifact, artifactPath.toFile());
+                JavaDependency dep = new JavaDependency(artifact, artifactPath.toFile(), os, arch);
                 dep.setSha256(digestUtils.digestAsHex(artifactPath.toFile()));
                 out.add(dep);
             }
@@ -129,12 +145,22 @@ public class DependencyProcessor {
         return out;
     }
 
-    private String javafxOperatingSystemClassifier(OperatingSystem os) {
+    private String javafxOperatingSystemClassifier(OperatingSystem os, CpuArch arch) {
         switch (os) {
             case LINUX:
-                return OperatingSystem.LINUX.getDisplay();
+                switch (arch) {
+                    case X64:
+                        return OperatingSystem.LINUX.getDisplay();
+                    case AARCH64:
+                        return OperatingSystem.LINUX.getDisplay() + "-" + CpuArch.AARCH64.getDisplay();
+                }
             case MAC:
-                return OperatingSystem.MAC.getDisplay();
+                switch (arch) {
+                    case X64:
+                        return OperatingSystem.MAC.getDisplay();
+                    case AARCH64:
+                        return OperatingSystem.MAC.getDisplay() + "-" + CpuArch.AARCH64.getDisplay();
+                }
             case WINDOWS:
                 return "win";
             default:
