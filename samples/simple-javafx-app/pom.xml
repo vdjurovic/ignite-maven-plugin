@@ -46,7 +46,7 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>co.bitshifted</groupId>
+				<groupId>co.bitshifted.appforge</groupId>
 				<artifactId>ignite-maven-plugin</artifactId>
 				<version>1.0.0-SNAPSHOT</version>
 				<executions>
