@@ -133,15 +133,18 @@ public class IgniteMojo extends AbstractMojo {
                 deployment.getApplicationInfo().setLicense(convertResources(Collections.singletonList(license), producer).get(0));
             }
             // process resources section
-            config.getResources().stream().forEach(r -> {
-                try {
-                    List<BasicResource> resources = producer.produceResources(r);
-                    deployment.addResources(resources);
-                } catch(IOException ex) {
-                    getLog().error("Failed to process resources", ex);
-                }
+            if(config.getResources() != null) {
+                config.getResources().stream().forEach(r -> {
+                    try {
+                        List<BasicResource> resources = producer.produceResources(r);
+                        deployment.addResources(resources);
+                    } catch(IOException ex) {
+                        getLog().error("Failed to process resources", ex);
+                    }
 
-            });
+                });
+            }
+
         } catch(IOException ex) {
             getLog().error("Failed to process dependencies", ex);
             throw new MojoExecutionException(ex);

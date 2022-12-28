@@ -43,7 +43,7 @@ jvm:
   major-version: "17"
   release: "latest"
   jvm-options: "-Xms10m -Xmx120m"
-  system-properties: "-Dprop1=value1 -Dprop2=value2"
+  system-properties: "-Dprop1=value1 -Dprop2=value:7"
   main-class: com.test.TestFX.TestFX
   #jar: my-artifact.jar # either jar or main-class should be specified
   module-name: com.test.testfx # module name in case app is modular
