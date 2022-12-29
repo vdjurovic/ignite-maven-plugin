@@ -19,16 +19,13 @@ import co.bitshifted.appforge.ignite.deploy.DependencyProcessor;
 import co.bitshifted.appforge.ignite.deploy.DependencyResolutionResult;
 import co.bitshifted.appforge.ignite.deploy.Packer;
 import co.bitshifted.appforge.ignite.exception.CommunicationException;
+import co.bitshifted.appforge.ignite.http.IgniteHttpClient;
+import co.bitshifted.appforge.ignite.http.SubmitDeploymentResponse;
 import co.bitshifted.appforge.ignite.model.IgniteConfig;
 import co.bitshifted.appforge.ignite.model.JavaDependency;
 import co.bitshifted.appforge.ignite.resource.ResourceProducer;
-import co.bitshifted.appforge.ignite.http.IgniteHttpClient;
-import co.bitshifted.appforge.ignite.http.SubmitDeploymentResponse;
+import co.bitshifted.appforge.ignite.util.ConfigurationLoader;
 import co.bitshifted.appforge.ignite.util.ModuleChecker;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.codec.digest.MessageDigestAlgorithms;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.BuildPluginManager;
@@ -37,9 +34,7 @@ import org.apache.maven.plugins.annotations.*;
 import org.apache.maven.project.MavenProject;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -61,8 +56,8 @@ import static co.bitshifted.appforge.ignite.IgniteConstants.*;
     requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
 public class IgniteMojo extends AbstractMojo {
 
-    private final ObjectMapper yamlObjectMapper;
-    private final DigestUtils digestUtils;
+    private final ConfigurationLoader configurationLoader;
+
 
     IgniteMojo(MavenProject project, File configFile ) {
         this();
@@ -71,8 +66,7 @@ public class IgniteMojo extends AbstractMojo {
     }
 
     public IgniteMojo() {
-        this.yamlObjectMapper = new ObjectMapper(new YAMLFactory());
-        this.digestUtils = new DigestUtils(MessageDigestAlgorithms.SHA_256);
+        this.configurationLoader = new ConfigurationLoader();
     }
 
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
@@ -91,7 +85,7 @@ public class IgniteMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException {
         ModuleChecker.initLogger(getLog());
         // load config file
-        IgniteConfig config = loadConfiguration();
+        IgniteConfig config = configurationLoader.loadConfiguration(configFile, getLog());
         if (config == null) {
             throw new MojoExecutionException("Aborting due to invalid or missing configuration file");
         }
@@ -168,14 +162,6 @@ public class IgniteMojo extends AbstractMojo {
 
     }
 
-    private IgniteConfig loadConfiguration() {
-        try(InputStream in = new FileInputStream(configFile)) {
-            return yamlObjectMapper.readValue(in, IgniteConfig.class);
-        } catch (IOException ex) {
-            getLog().error("Failed to load configuration file", ex);
-            return null;
-        }
-    }
 
     private SubmitDeploymentResponse submitDeployment(DeploymentDTO deployment, String serverUrl) throws MojoExecutionException {
         try {

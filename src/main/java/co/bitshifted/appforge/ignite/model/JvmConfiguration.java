@@ -17,6 +17,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.util.Set;
+
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class JvmConfiguration {
@@ -34,6 +36,10 @@ public class JvmConfiguration {
     private String jar;
     @JsonProperty("module-name")
     private String moduleName;
+    @JsonProperty("add-modules")
+    private String addModules;
+    @JsonProperty("jlink-ignore-modules")
+    private Set<String> jlinkIgnoreModules;
     private String arguments;
 
     public JvmConfigurationDTO toDto() {
@@ -45,6 +51,8 @@ public class JvmConfiguration {
         dto.setSystemProperties(systemProperties);
         dto.setMainClass(mainClass);
         dto.setJar(jar);
+        dto.setAddModules(addModules);
+        dto.setJlinkIgnoreModules(jlinkIgnoreModules);
         dto.setModuleName(moduleName);
         dto.setArguments(arguments);
         return dto;

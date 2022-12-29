@@ -21,6 +21,10 @@ jvm:
   main-class: com.myapp.MainClass
   jar: my-artifact.jar # either jar or main-class should be specified
   module-name: mymodule # module name in case app is modular
+  add-modules: module1,module2/test
+  jlink-ignore-modules:
+    - ignore-module-1
+    - ignore-module-2
   arguments: "arg1 arg2"
 resources:
   - source: sample/files/dir1
