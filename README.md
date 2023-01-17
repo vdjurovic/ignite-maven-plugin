@@ -1,6 +1,6 @@
 # Ignite Maven Plugin
 
-*Ignite is part of [AppForge](https://github.com/bitshifted/appforge) platform.*
+*Ignite Maven Plugin is part of [AppForge](https://github.com/bitshifted/appforge) platform.*
 
 Maven plugin for creating app deployment packages. This plugin alows seamless integration of AppForge into build process.
 
