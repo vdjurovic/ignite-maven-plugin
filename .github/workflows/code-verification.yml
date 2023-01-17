@@ -1,11 +1,11 @@
 name: Perform code verification
 on:
-  - pull_request:
-      branches: [ main ]
-  - push:
-      branches: [ main ]
-      paths-ignore:
-        - 'version'
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - 'version'
 jobs:
   install-java:
     runs-on: ubuntu-latest
