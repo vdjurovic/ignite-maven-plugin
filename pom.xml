@@ -38,7 +38,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
         <okhttp.version>4.9.0</okhttp.version>
-        <appforge-common.version>0.1.0-SNAPSHOT</appforge-common.version>
+        <appforge-common.version>1.0.0</appforge-common.version>
     </properties>
 
     <dependencies>
