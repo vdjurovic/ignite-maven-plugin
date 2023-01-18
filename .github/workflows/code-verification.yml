@@ -20,4 +20,4 @@ jobs:
           cache: 'maven'
       - name: Build and install
         run: |
-          mvn clean install
+          mvn -Dgpg.skip clean install
