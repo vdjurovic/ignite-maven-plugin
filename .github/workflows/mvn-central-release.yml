@@ -50,7 +50,7 @@ jobs:
           server-password: MVN_CENTRAL_PASSWORD
       - name: Release to Maven repo
         run: |
-          export VERSION=$(./cicd/version.sh)
+          export VERSION=$(cat version)
           echo "Version to set: $VERSION"
           echo  "TAG_NAME=$VERSION" >> $GITHUB_ENV 
           mvn -Dgpg.keyname=${{ secrets.GPG_KEY_NAME }} -Dgpg.passphrase=${{ secrets.MAVEN_SIGNING_KEY_PASSPHRASE }} \
