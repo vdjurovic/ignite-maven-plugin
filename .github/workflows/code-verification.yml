@@ -20,4 +20,4 @@ jobs:
           cache: 'maven'
       - name: Build and install
         run: |
-          mvn install
+          mvn clean install
