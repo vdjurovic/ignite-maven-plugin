@@ -15,7 +15,7 @@
     <parent>
         <groupId>co.bitshifted.appforge</groupId>
         <artifactId>appforge</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.3</version>
     </parent>
     <groupId>co.bitshifted.appforge</groupId>
     <artifactId>ignite-maven-plugin</artifactId>
@@ -30,15 +30,15 @@
         <connection>scm:git:git@github.com:bitshifted/ignite-maven-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:bitshifted/ignite-maven-plugin.git</developerConnection>
         <url>https://github.com/bitshifted/ignite-maven-plugin</url>
-        <tag>v1.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <properties>
-        <revision>0.1.0-SNAPSHOT</revision>
+        <revision>0.0.0-SNAPSHOT</revision>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
         <okhttp.version>4.9.0</okhttp.version>
-        <appforge-common.version>1.0.0</appforge-common.version>
+        <appforge-common.version>1.1.1</appforge-common.version>
     </properties>
 
     <dependencies>

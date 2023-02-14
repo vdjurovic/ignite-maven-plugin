@@ -61,7 +61,7 @@ jobs:
           export VERSION=$(cat version)
           echo "Version to set: $VERSION"
           echo  "TAG_NAME=$VERSION" >> $GITHUB_ENV 
-          mvn -Dgpg.keyname=${{ secrets.GPG_KEY_NAME }} -Dgpg.passphrase=${{ secrets.MAVEN_SIGNING_KEY_PASSPHRASE }} \
+          mvn -P release -Dgpg.keyname=${{ secrets.GPG_KEY_NAME }} -Dgpg.passphrase=${{ secrets.MAVEN_SIGNING_KEY_PASSPHRASE }} \
               -Drevision=$VERSION deploy
         env:
           MVN_CENTRAL_USERNAME: ${{ vars.MVN_CENTRAL_USERNAME }}
